@@ -28,6 +28,14 @@ namespace TemplateGenerator
             }
         }
 
+        ~DocxTemplateGenerator()
+        {
+            if (generatedTemplate != null)
+            {
+                ((IDisposable)generatedTemplate).Dispose();
+            }
+        }
+
         public void replaceKeywordsInTemplate(DataRow readDataFromDBF)
         {
             newGeneratedTemplateName = (string)readDataFromDBF["NUME"] + ".docx";
@@ -55,7 +63,16 @@ namespace TemplateGenerator
 
         public void saveNewDocXfile(string path)
         {
-            generatedTemplate.SaveAs(path + newGeneratedTemplateName);
+            try
+            {
+                generatedTemplate.SaveAs(path + newGeneratedTemplateName);
+            }
+            catch (System.IO.IOException)
+            {
+                Console.WriteLine("Fisierul \"{0}\" does deja deschis si nu poate sa fie modificat.", path + newGeneratedTemplateName);
+                Console.ReadKey();
+                Environment.Exit(3);
+            }
             ((IDisposable)generatedTemplate).Dispose();
         }
     }

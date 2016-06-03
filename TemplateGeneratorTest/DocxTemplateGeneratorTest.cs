@@ -9,7 +9,7 @@ namespace TemplateGeneratorTest
     [TestClass]
     public class DocxTemplateGeneratorTest
     {
-        private string pathToWorkingFiles = @"d:\CLOUD-SYNC\Cipi\Dropbox\Projects\TemplateGenerator\WorkingFiles\";
+        private string pathToWorkingFiles = @"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\";
 
         [TestMethod]
         public void ReplaceNumeStradaCorrect()

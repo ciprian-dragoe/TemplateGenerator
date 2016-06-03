@@ -117,6 +117,7 @@ namespace TemplateGenerator
             // field from the buffer. This helps account for any extra space at the 
             // end of each record and probably performs better.
             byte[] buffer = dbfFile.ReadBytes(header.recordLen);
+            currentIndex++;
             BinaryReader recReader = new BinaryReader(new MemoryStream(buffer));
             DataRow returnValue = relevantColumnsDataTable.Clone().NewRow();
 
