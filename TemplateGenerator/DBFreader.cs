@@ -56,27 +56,23 @@ namespace TemplateGenerator
         }
         private ArrayList fields = new ArrayList(); // contains the columnTypes from the DBF
 
-        public int currentIndex { get; private set; }
+        //public int currentIndex { get; private set; }
 
-        public int totalNumberElements { get; private set; }
+        private int totalNumberElements;
 
-        private BinaryReader dbfFile;
+        private string pathToDBF;
 
         // open the DBF and init the FieldDescriptor & DBFHeader & totalNumberElements, place the file index at the first row 
         public DBFreader(string pathToDBF)
         {
+            this.pathToDBF = pathToDBF;
+        }
+
+        private void ReadHeader(BinaryReader dbfFile)
+        {
             // Read the header into a buffer    
-            try
-            {
-                dbfFile = new BinaryReader(File.OpenRead(pathToDBF));
-            }
-            catch (System.IO.IOException)
-            {
-                Console.WriteLine("Fisierul \"{0}\" este deschis in alta aplicatie.", pathToDBF);
-                Console.ReadKey();
-                Environment.Exit(1);
-            }
             
+
             byte[] buffer = dbfFile.ReadBytes(Marshal.SizeOf(typeof(DBFHeader)));
 
             // Marshall the header into a DBFHeader structure
@@ -98,26 +94,29 @@ namespace TemplateGenerator
             }
 
             dbfFile.ReadBytes(2);   // move 1 byte index in file so that current position is the first row & column data
-            currentIndex = 1;
+            //currentIndex = 1;
             totalNumberElements = header.numRecords;
         }
 
-        ~DBFreader ()
+        public IEnumerable<DataRow> readRows(DataTable relevantColumnsDataTable)
         {
-            if (dbfFile!=null)
+            using (var dbfFile = new BinaryReader(File.OpenRead(pathToDBF)))
             {
-                dbfFile.Close();
+                ReadHeader(dbfFile);
+                for (int i = 0; i < totalNumberElements; i++)
+                {
+                    yield return getRowAndAdvanceIndex(relevantColumnsDataTable, dbfFile);
+                }
             }
         }
 
-
-        public DataRow getRowAndAdvanceIndex(DataTable relevantColumnsDataTable)
+        private DataRow getRowAndAdvanceIndex(DataTable relevantColumnsDataTable, BinaryReader dbfFile)
         {
             // First we'll read the entire record into a buffer and then read each 
             // field from the buffer. This helps account for any extra space at the 
             // end of each record and probably performs better.
             byte[] buffer = dbfFile.ReadBytes(header.recordLen);
-            currentIndex++;
+            
             BinaryReader recReader = new BinaryReader(new MemoryStream(buffer));
             DataRow returnValue = relevantColumnsDataTable.Clone().NewRow();
 

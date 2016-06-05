@@ -51,9 +51,8 @@ namespace TemplateGenerator
                     }
                     catch (System.InvalidCastException)
                     {
-                        Console.WriteLine("Column \"{0}\" does not exist in DBF file.", column.ColumnName);
-                        Console.ReadKey();
-                        Environment.Exit(2);
+                        // create Log & on console window
+                        throw new Exception(string.Format("Column \"{0}\" does not exist in DBF file.", column.ColumnName));
                     }
                     
                 }

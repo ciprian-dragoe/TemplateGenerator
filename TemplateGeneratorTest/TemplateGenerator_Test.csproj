@@ -62,10 +62,16 @@
     <Compile Include="DocxTemplateGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemplateGenerator\TemplateGenerator.csproj">
+    <ProjectReference Include="..\TemplateGenerator\TemplateGenerator_Logic.csproj">
       <Project>{32e14dcb-f5d7-40bc-8d0a-c063735da6ba}</Project>
-      <Name>TemplateGenerator</Name>
+      <Name>TemplateGenerator_Logic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="TestFiles\Contract Dolce Sport Mansat -7.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

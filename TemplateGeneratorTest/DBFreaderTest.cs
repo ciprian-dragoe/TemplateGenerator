@@ -8,7 +8,7 @@ namespace TemplateGeneratorTest
     [TestClass]
     public class DBFreaderTest
     {
-        private string defaultPathDBF = @"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE.DBF";
+        private string defaultPathDBF = @"TestFiles\SATNETTE.DBF";
 
         [TestMethod]
         public void FirstRowReadCorrectly()

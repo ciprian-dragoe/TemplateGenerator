@@ -14,14 +14,21 @@ namespace TemplateGenerator
     {
         static void Main(string[] args)
         {
+            for (int i = 0; i < 1000000; i++)
+            {
+
+            }
+            Console.WriteLine("ceva");
+            Console.ReadKey();
+
             DocxTemplateGenerator templateGenerator = new DocxTemplateGenerator(@"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\Contract Dolce Sport Mansat -7.docx");
             DBFreader dbfReader = new DBFreader(@"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE.DBF");
-
-            while (dbfReader.currentIndex < dbfReader.totalNumberElements)
+            int count = 0;
+            foreach (var dataRow in dbfReader.readRows(templateGenerator.columnNamesFromDBF))
             {
-                DataRow readData = dbfReader.getRowAndAdvanceIndex(templateGenerator.columnNamesFromDBF);
-                templateGenerator.replaceKeywordsInTemplate(readData);
-                templateGenerator.saveNewDocXfile(@"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\GeneratedTemplates\");
+                templateGenerator.replaceKeywordsInTemplate(dataRow);
+                Console.WriteLine(count++);
+                //templateGenerator.saveNewDocXfile(@"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\GeneratedTemplates\");
             }
             Console.WriteLine("Finished.");
             Console.ReadKey();
