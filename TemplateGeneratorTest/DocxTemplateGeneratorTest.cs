@@ -3,13 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TemplateGenerator;
 using System.Data;
 using Novacode;
+using System.Linq;
 
 namespace TemplateGeneratorTest
 {
     [TestClass]
     public class DocxTemplateGeneratorTest
     {
-        private string pathToWorkingFiles = @"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\";
+        private string pathToWorkingFiles = @"TestFiles\";
 
         [TestMethod]
         public void ReplaceNumeStradaCorrect()
@@ -18,7 +19,7 @@ namespace TemplateGeneratorTest
             DBFreader reader = new DBFreader(pathToWorkingFiles +"SATNETTE.DBF");
             string expected = "Acesta este un test cu I.I. MARIN IONEL si STEZII FN.Se pare ca merge sa schimbe bine numele si prenumele.";
 
-            DataRow newValues = reader.getRowAndAdvanceIndex(generator.columnNamesFromDBF);
+            DataRow newValues = reader.readRows(generator.columnNamesFromDBF).First();
             generator.replaceKeywordsInTemplate(newValues);
             generator.saveNewDocXfile(pathToWorkingFiles + "GeneratedTemplates\\");
 
@@ -40,7 +41,7 @@ namespace TemplateGeneratorTest
             DBFreader reader = new DBFreader(pathToWorkingFiles + "SATNETTE.DBF");
             string expected = "Acesta este un test cu I.I. MARIN IONEL si .Se pare ca merge sa schimbe bine numele si prenumele.";
 
-            DataRow newValues = reader.getRowAndAdvanceIndex(generator.columnNamesFromDBF);
+            DataRow newValues = reader.readRows(generator.columnNamesFromDBF).First();
             generator.replaceKeywordsInTemplate(newValues);
             generator.saveNewDocXfile(pathToWorkingFiles + "GeneratedTemplates\\");
 
@@ -63,11 +64,11 @@ namespace TemplateGeneratorTest
             string expected1 = "Acesta este un test cu I.I. MARIN IONEL si STEZII FN.Se pare ca merge sa schimbe bine numele si prenumele.";
             string expected2 = "Acesta este un test cu BANCA COOP PROGRESUL Sib si P-TA A. VLAICU.Se pare ca merge sa schimbe bine numele si prenumele.";
 
-            DataRow newValues = reader.getRowAndAdvanceIndex(generator.columnNamesFromDBF);
+            DataRow newValues = reader.readRows(generator.columnNamesFromDBF).First();
             generator.replaceKeywordsInTemplate(newValues);
             generator.saveNewDocXfile(pathToWorkingFiles + "GeneratedTemplates\\");
 
-            newValues = reader.getRowAndAdvanceIndex(generator.columnNamesFromDBF);
+            newValues = reader.readRows(generator.columnNamesFromDBF).ElementAt(1);
             generator.replaceKeywordsInTemplate(newValues);
             generator.saveNewDocXfile(pathToWorkingFiles + "GeneratedTemplates\\");
 

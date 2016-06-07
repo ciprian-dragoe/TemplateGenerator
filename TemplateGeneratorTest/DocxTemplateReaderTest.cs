@@ -9,7 +9,7 @@ namespace TemplateGeneratorTest
     [TestClass]
     public class DocxTemplateReaderTest
     {
-        private string pathToWorkingFiles = @"d:\CLOUD-SYNC\Cipi\Qsync\6_PROJECTS\TemplateGenerator\WorkingFiles\";
+        private string pathToWorkingFiles = @"TestFiles\";
 
         [TestMethod]
         public void KeywordsReadCorrectly()

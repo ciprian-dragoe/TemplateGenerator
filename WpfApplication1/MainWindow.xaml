@@ -73,7 +73,10 @@
 
         <ProgressBar
             Grid.Row="2"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="2"
+            Minimum="0"
+            Maximum="100"
+            Name="progressBarGenerateTemplates">
         </ProgressBar>
 
 

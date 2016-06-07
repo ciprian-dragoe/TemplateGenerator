@@ -63,12 +63,13 @@ namespace TemplateGenerator
         public void saveNewDocXfile(string path)
         {
             try
-            {
+            { 
                 generatedTemplate.SaveAs(path + newGeneratedTemplateName);
+                
             }
             catch (System.IO.IOException)
             {
-                Console.WriteLine("Fisierul \"{0}\" does deja deschis si nu poate sa fie modificat.", path + newGeneratedTemplateName);
+                Console.WriteLine("Fisierul \"{0}\" este deja deschis si nu poate sa fie modificat.", path + newGeneratedTemplateName);
                 Console.ReadKey();
                 Environment.Exit(3);
             }

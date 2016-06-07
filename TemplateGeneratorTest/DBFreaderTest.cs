@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TemplateGenerator;
 using System.Data;
+using System.Linq;
 
 namespace TemplateGeneratorTest
 {
@@ -26,7 +27,8 @@ namespace TemplateGeneratorTest
 
             // act
             DataTable actual = expectedTable.Clone();
-            actual.Rows.Add(readFile.readRows(requiredColumns).ItemArray);
+
+            actual.Rows.Add(readFile.readRows(requiredColumns).First().ItemArray);
 
             // expt
             Assert.AreEqual(expectedTable.Rows[0]["NUME"], actual.Rows[0]["NUME"]);
@@ -51,7 +53,7 @@ namespace TemplateGeneratorTest
 
             // act
             DataTable actual = expectedTable.Clone();
-            actual.Rows.Add(readFile.getRowAndAdvanceIndex(requiredColumns).ItemArray);
+            actual.Rows.Add(readFile.readRows(requiredColumns).First().ItemArray);
 
             // expt
             Assert.AreEqual(expectedTable.Rows[0]["NUME"], actual.Rows[0]["NUME"]);
@@ -81,8 +83,8 @@ namespace TemplateGeneratorTest
 
             // act
             DataTable actual = expectedTable.Clone();
-            actual.Rows.Add(readFile.getRowAndAdvanceIndex(requiredColumns).ItemArray);
-            actual.Rows.Add(readFile.getRowAndAdvanceIndex(requiredColumns).ItemArray);
+            actual.Rows.Add(readFile.readRows(requiredColumns).First().ItemArray);
+            actual.Rows.Add(readFile.readRows(requiredColumns).ElementAt(1).ItemArray);
 
             // expt
             Assert.AreEqual(expectedTable.Rows[0]["NUME"], actual.Rows[0]["NUME"]);
