@@ -5,22 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400">
+        Title="TemplateGenerator" Height="200" Width="420">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="135"/>
+            <ColumnDefinition Width="280"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Fill="Orange"/>
-        <Rectangle Fill="Red" Grid.Row="1" Grid.Column="1"/>
-        <Rectangle Fill="Black" Grid.Column="1"/>
-        <Button>
-            <Grid.Row="2"></Grid.Row>
-        </Button>
+        
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Vertical">
+            <TextBlock Text="Locatie fisier DBF:"
+                       Margin="5">
+            </TextBlock>
+        </StackPanel>
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="0">
+            <TextBox Name="dbfFolderPath"
+                     Margin="10,5"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Width="250">
+            </TextBox>
+            <Button
+                Name="browseDbfButton"
+                Width="60"
+                HorizontalAlignment="Left"
+                Margin="10,0"
+                Content="Browse"
+                Click="browseDbfButton_Click">
+            </Button>
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Orientation="Vertical">
+            <TextBlock Text="Locatie template DOCX:"
+                       Margin="5">
+            </TextBlock>
+        </StackPanel>
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="1">
+            <TextBox Name="docxFolderPath"
+                     Margin="10,5"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Width="250">
+            </TextBox>
+            <Button
+                Name="browseDocxButton"
+                Width="60"
+                HorizontalAlignment="Left"
+                Margin="10,0"
+                Content="Browse"
+                Click="browseDocxButton_Click">
+            </Button>
+        </StackPanel>
+
+        <ProgressBar
+            Grid.Row="2"
+            Grid.ColumnSpan="2">
+        </ProgressBar>
+
+
     </Grid>
 </Window>

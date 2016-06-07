@@ -26,7 +26,7 @@ namespace TemplateGeneratorTest
 
             // act
             DataTable actual = expectedTable.Clone();
-            actual.Rows.Add(readFile.getRowAndAdvanceIndex(requiredColumns).ItemArray);
+            actual.Rows.Add(readFile.readRows(requiredColumns).ItemArray);
 
             // expt
             Assert.AreEqual(expectedTable.Rows[0]["NUME"], actual.Rows[0]["NUME"]);
