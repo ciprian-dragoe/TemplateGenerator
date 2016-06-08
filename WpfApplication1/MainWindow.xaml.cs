@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TemplateGenerator;
+using System.Windows.Forms;
 
 namespace WpfApplication1
 {
@@ -30,7 +32,7 @@ namespace WpfApplication1
         private void browseDbfButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter options and filter index.
             openFileDialog.Filter = "DBF Files (.dbf)|*.dbf|All Files (*.*)|*.*";
@@ -38,13 +40,16 @@ namespace WpfApplication1
             openFileDialog.Title = "Selecteaza fisierul DBF";
             openFileDialog.Multiselect = false;
             openFileDialog.ShowDialog();
-            dbfFolderPath.Text = openFileDialog.FileName;
+            if (openFileDialog.FileName != "")
+            {
+                dbfFolderPath.Text = openFileDialog.FileName;
+            }
         }
 
         private void browseDocxButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             // Set filter options and filter index.
             openFileDialog.Filter = "DocX Files (.docx)|*.docx|All Files (*.*)|*.*";
@@ -52,7 +57,39 @@ namespace WpfApplication1
             openFileDialog.Title = "Selecteaza fisierul template docx";
             openFileDialog.Multiselect = false;
             openFileDialog.ShowDialog();
-            docxFolderPath.Text = openFileDialog.FileName;
+            if (openFileDialog.FileName != "")
+            {
+                docxFolderPath.Text = openFileDialog.FileName;
+                if (generatedDocxPath.Text == "")
+                {
+                    // remove the file.docx from path\file.docx
+                    generatedDocxPath.Text = openFileDialog.FileName.Substring(0, openFileDialog.FileName.LastIndexOf("\\"));
+                }
+            }
+            
+        }
+
+        private void browseGeneratedDocxButton_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult result = fbd.ShowDialog();
+            if (fbd.SelectedPath != "")
+            {
+                generatedDocxPath.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] paths = new string[] { dbfFolderPath.Text, docxFolderPath.Text, generatedDocxPath.Text};
+            try
+            {
+                TemplateGenerator.TemplateManager.Main(paths);
+            }
+            catch (Exception exceptie)
+            {
+                System.Windows.MessageBox.Show(exceptie.Message);
+            }
         }
     }
 }

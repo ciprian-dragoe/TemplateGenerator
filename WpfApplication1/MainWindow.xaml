@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="TemplateGenerator" Height="200" Width="420">
+        Title="TemplateGenerator" Height="240" Width="420">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -71,12 +72,53 @@
             </Button>
         </StackPanel>
 
-        <ProgressBar
+        <StackPanel
             Grid.Row="2"
-            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            Orientation="Vertical">
+            <TextBlock Text="Locatie salvare fisiere generate:"
+                       Margin="5"
+                       TextWrapping="Wrap">
+            </TextBlock>
+        </StackPanel>
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="2">
+            <TextBox Name="generatedDocxPath"
+                     Margin="10,5"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Width="250">
+            </TextBox>
+            <Button
+                Name="browseGeneratedDocxButton"
+                Width="60"
+                HorizontalAlignment="Left"
+                Margin="10,0"
+                Content="Browse"
+                Click="browseGeneratedDocxButton_Click">
+            </Button>
+        </StackPanel>
+
+        <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Name="startButton"
+            Click="startButton_Click"
+            Content="Start"
+            Width="60"
+            Height="20">
+        </Button>
+        <ProgressBar
+            Grid.Row="3"
+            Grid.Column="2"
             Minimum="0"
             Maximum="100"
-            Name="progressBarGenerateTemplates">
+            Name="progressBarGenerateTemplates"
+            Width="250"
+            Height="20"
+            Margin="10,0"
+            HorizontalAlignment="Left">
         </ProgressBar>
 
 

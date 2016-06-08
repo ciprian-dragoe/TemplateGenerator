@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Novacode;
 using System.Data;
+using System.IO;
 
 namespace TemplateGenerator
 {
@@ -52,7 +53,7 @@ namespace TemplateGenerator
                     catch (System.InvalidCastException)
                     {
                         // create Log & on console window
-                        throw new Exception(string.Format("Column \"{0}\" does not exist in DBF file.", column.ColumnName));
+                        throw new Exception(string.Format("Cuvantul de inlocuit \"{0}\" din fisierul word nu are un corespondent ca si coloana in fisierul DBF.", column.ColumnName));
                     }
                     
                 }
@@ -64,14 +65,12 @@ namespace TemplateGenerator
         {
             try
             { 
-                generatedTemplate.SaveAs(path + newGeneratedTemplateName);
+                generatedTemplate.SaveAs(path + "\\" + newGeneratedTemplateName);
                 
             }
             catch (System.IO.IOException)
             {
-                Console.WriteLine("Fisierul \"{0}\" este deja deschis si nu poate sa fie modificat.", path + newGeneratedTemplateName);
-                Console.ReadKey();
-                Environment.Exit(3);
+                throw new Exception(string.Format("Fisierul \"{0}\" este deja deschis si nu poate sa fie modificat.", path + newGeneratedTemplateName));
             }
             ((IDisposable)generatedTemplate).Dispose();
         }
