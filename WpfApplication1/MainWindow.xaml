@@ -100,15 +100,28 @@
             </Button>
         </StackPanel>
 
-        <Button
+        <StackPanel
+            Orientation="Vertical"
             Grid.Row="3"
-            Grid.Column="0"
-            Name="startButton"
-            Click="startButton_Click"
-            Content="Start"
-            Width="60"
-            Height="20">
-        </Button>
+            Grid.Column="0">
+            <Button
+                Name="startButton"
+                Margin="5"
+                Click="startButton_Click"
+                Content="Start"
+                Width="60"
+                Height="20">
+            </Button>
+            <Button
+                Name="cancelButton"
+                Click="cancelButton_Click"
+                Content="Stop"
+                IsEnabled="False"
+                Width="60"
+                Height="20">
+            </Button>
+        </StackPanel>
+            
         <ProgressBar
             Grid.Row="3"
             Grid.Column="2"

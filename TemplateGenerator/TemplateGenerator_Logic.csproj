@@ -53,6 +53,7 @@
     <Compile Include="DBFreader.cs" />
     <Compile Include="DocxTemplateGenerator.cs" />
     <Compile Include="DocxTemplateReader.cs" />
+    <Compile Include="MainClass.cs" />
     <Compile Include="TemplateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,7 +13,7 @@ namespace TemplateGenerator
         private DocxTemplateReader templateSource;
         public DataTable columnNamesFromDBF { get; private set; }
         private DocX generatedTemplate;
-        private string newGeneratedTemplateName;
+        public string newGeneratedTemplateName { get;  private set; }
 
         public DocxTemplateGenerator(string pathToTemplateDocX)
         {
