@@ -4,6 +4,7 @@ using TemplateGenerator;
 using System.Data;
 using Novacode;
 using System.Linq;
+using System.IO;
 
 namespace TemplateGeneratorTest
 {
@@ -15,6 +16,13 @@ namespace TemplateGeneratorTest
         [TestMethod]
         public void ReplaceNumeStradaCorrect()
         {
+            System.IO.DirectoryInfo di = new DirectoryInfo(pathToWorkingFiles + "GeneratedTemplates\\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
             DocxTemplateGenerator generator = new DocxTemplateGenerator(pathToWorkingFiles + "Contract Dolce Sport Mansat -5.docx");
             DBFreader reader = new DBFreader(pathToWorkingFiles +"SATNETTE.DBF");
             string expected = "Acesta este un test cu I.I. MARIN IONEL si STEZII FN.Se pare ca merge sa schimbe bine numele si prenumele.";
@@ -37,6 +45,13 @@ namespace TemplateGeneratorTest
         [TestMethod]
         public void ReplaceNumeEmptyTELMANCorrect()
         {
+            System.IO.DirectoryInfo di = new DirectoryInfo(pathToWorkingFiles + "GeneratedTemplates\\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
             DocxTemplateGenerator generator = new DocxTemplateGenerator(pathToWorkingFiles + "Contract Dolce Sport Mansat -6.docx");
             DBFreader reader = new DBFreader(pathToWorkingFiles + "SATNETTE.DBF");
             string expected = "Acesta este un test cu I.I. MARIN IONEL si .Se pare ca merge sa schimbe bine numele si prenumele.";
@@ -59,6 +74,13 @@ namespace TemplateGeneratorTest
         [TestMethod]
         public void Generate2Templates()
         {
+            System.IO.DirectoryInfo di = new DirectoryInfo(pathToWorkingFiles + "GeneratedTemplates\\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
             DocxTemplateGenerator generator = new DocxTemplateGenerator(pathToWorkingFiles + "Contract Dolce Sport Mansat -5.docx");
             DBFreader reader = new DBFreader(pathToWorkingFiles + "SATNETTE.DBF");
             string expected1 = "Acesta este un test cu I.I. MARIN IONEL si STEZII FN.Se pare ca merge sa schimbe bine numele si prenumele.";

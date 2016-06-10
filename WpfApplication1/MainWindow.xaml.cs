@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TemplateGenerator;
-using System.Windows.Forms;
 using System.ComponentModel;
 
 namespace WpfApplication1
@@ -38,7 +37,7 @@ namespace WpfApplication1
         private void browseDbfButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
             // Set filter options and filter index.
             openFileDialog.Filter = "DBF Files (.dbf)|*.dbf|All Files (*.*)|*.*";
@@ -55,7 +54,7 @@ namespace WpfApplication1
         private void browseDocxButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the open file dialog box.
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
             // Set filter options and filter index.
             openFileDialog.Filter = "DocX Files (.docx)|*.docx|All Files (*.*)|*.*";
@@ -72,8 +71,8 @@ namespace WpfApplication1
 
         private void browseGeneratedDocxButton_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
+            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
+            fbd.ShowDialog();
             if (fbd.SelectedPath != "")
             {
                 generatedDocxPath.Text = fbd.SelectedPath;
@@ -82,10 +81,24 @@ namespace WpfApplication1
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] paths = new string[] { dbfFolderPath.Text, docxFolderPath.Text, generatedDocxPath.Text};
+            int totalNumberOfRecords = 0;
+            try
+            {
+                DBFreader getMaximumElementsProgressBar = new DBFreader(dbfFolderPath.Text);
+                totalNumberOfRecords = getMaximumElementsProgressBar.totalNumberElements;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                cancelButton_Click(new object(), new RoutedEventArgs());
+            }
+            string[] paths = new string[] { dbfFolderPath.Text, docxFolderPath.Text, generatedDocxPath.Text, totalNumberOfRecords.ToString()};
             backgroundGenerateDocx.WorkerSupportsCancellation = true;
-            //backgroundGenerateDocx.WorkerReportsProgress = true;
-            backgroundGenerateDocx.DoWork += new DoWorkEventHandler(backgroundGenerateDocx_DoWork);
+            backgroundGenerateDocx.WorkerReportsProgress = true;
+            backgroundGenerateDocx.DoWork += new DoWorkEventHandler(BackgroundGenerateDocx_DoWork);
+            backgroundGenerateDocx.ProgressChanged += new ProgressChangedEventHandler(BackgroundGenerateDocx_ProgressChanged);
+            backgroundGenerateDocx.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundGenerateDocx_RunWorkerCompleted);
+
             backgroundGenerateDocx.RunWorkerAsync(paths);
             cancelButton.IsEnabled = true;
             startButton.IsEnabled = false;
@@ -96,14 +109,16 @@ namespace WpfApplication1
             backgroundGenerateDocx.CancelAsync();
             cancelButton.IsEnabled = false;
             startButton.IsEnabled = true;
-            
+            progressBarGenerateTemplates.Value = 0;
         }
 
-        private void backgroundGenerateDocx_DoWork(object o, DoWorkEventArgs e)
+        private void BackgroundGenerateDocx_DoWork(object o, DoWorkEventArgs e)
         {
             BackgroundWorker bw = o as BackgroundWorker;
+            int totalNumberElements = Int32.Parse(((string[])e.Argument)[3]);
             try
             {
+                int index = 0;
                 foreach (var generatedFileName in TemplateManager.generateDocxTemplates(((string[])e.Argument)[0], ((string[])e.Argument)[1], ((string[])e.Argument)[2]))
                 {
                     if (bw.CancellationPending == true)
@@ -111,14 +126,26 @@ namespace WpfApplication1
                         e.Cancel = true;
                         break;
                     }
+                    index++;
+                    bw.ReportProgress((int)((double)index / totalNumberElements * 100));
                 }
-            }
-            catch (Exception ex)
+            }            catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
                 e.Cancel = true;
                 this.Dispatcher.Invoke((Action)(() => cancelButton_Click(new object(), new RoutedEventArgs())));
             }
         }   // backgroundGenerateDocx_DoWork
+
+        private void BackgroundGenerateDocx_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.progressBarGenerateTemplates.Value = e.ProgressPercentage;
+        }
+
+        private void BackgroundGenerateDocx_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.cancelButton_Click(new object(), new RoutedEventArgs());
+            MessageBox.Show("Fisiere generate.");
+        }
     }
 }

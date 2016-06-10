@@ -34,7 +34,6 @@ namespace TemplateGenerator
             public Int16 reserved4;
         }
         private DBFHeader header;
-
         // This is the field descriptor structure. 
         // There will be one of these for each column in the table.
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
@@ -55,24 +54,30 @@ namespace TemplateGenerator
             public byte indexFlag;
         }
         private ArrayList fields = new ArrayList(); // contains the columnTypes from the DBF
-
-        //public int currentIndex { get; private set; }
-
-        private int totalNumberElements;
-
+        public int totalNumberElements { get; private set; }
         private string pathToDBF;
 
         // open the DBF and init the FieldDescriptor & DBFHeader & totalNumberElements, place the file index at the first row 
         public DBFreader(string pathToDBF)
         {
             this.pathToDBF = pathToDBF;
+            using (var dbfFile = new BinaryReader(File.OpenRead(pathToDBF)))
+            {
+                // Read the header into a buffer    
+                byte[] buffer = dbfFile.ReadBytes(Marshal.SizeOf(typeof(DBFHeader)));
+
+                // Marshall the header into a DBFHeader structure
+                GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                header = (DBFHeader)Marshal.PtrToStructure(
+                                    handle.AddrOfPinnedObject(), typeof(DBFHeader));
+                handle.Free();
+                totalNumberElements = header.numRecords;
+            }   // using
         }
 
         private void ReadHeader(BinaryReader dbfFile)
         {
             // Read the header into a buffer    
-            
-
             byte[] buffer = dbfFile.ReadBytes(Marshal.SizeOf(typeof(DBFHeader)));
 
             // Marshall the header into a DBFHeader structure
@@ -116,7 +121,7 @@ namespace TemplateGenerator
             // field from the buffer. This helps account for any extra space at the 
             // end of each record and probably performs better.
             byte[] buffer = dbfFile.ReadBytes(header.recordLen);
-            
+
             BinaryReader recReader = new BinaryReader(new MemoryStream(buffer));
             DataRow returnValue = relevantColumnsDataTable.Clone().NewRow();
 

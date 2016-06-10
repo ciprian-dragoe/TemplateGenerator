@@ -121,10 +121,10 @@
                 Height="20">
             </Button>
         </StackPanel>
-            
+
         <ProgressBar
             Grid.Row="3"
-            Grid.Column="2"
+            Grid.Column="1"
             Minimum="0"
             Maximum="100"
             Name="progressBarGenerateTemplates"
@@ -133,7 +133,5 @@
             Margin="10,0"
             HorizontalAlignment="Left">
         </ProgressBar>
-
-
     </Grid>
 </Window>

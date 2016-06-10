@@ -83,7 +83,7 @@ namespace TemplateGeneratorTest
 
             // act
             DataTable actual = expectedTable.Clone();
-            actual.Rows.Add(readFile.readRows(requiredColumns).First().ItemArray);
+            actual.Rows.Add(readFile.readRows(requiredColumns).ElementAt(0).ItemArray);
             actual.Rows.Add(readFile.readRows(requiredColumns).ElementAt(1).ItemArray);
 
             // expt
