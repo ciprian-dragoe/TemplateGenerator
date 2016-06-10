@@ -61,18 +61,26 @@ namespace TemplateGenerator
         public DBFreader(string pathToDBF)
         {
             this.pathToDBF = pathToDBF;
-            using (var dbfFile = new BinaryReader(File.OpenRead(pathToDBF)))
+            try
             {
-                // Read the header into a buffer    
-                byte[] buffer = dbfFile.ReadBytes(Marshal.SizeOf(typeof(DBFHeader)));
+                using (var dbfFile = new BinaryReader(File.OpenRead(pathToDBF)))
+                {
+                    // Read the header into a buffer    
+                    byte[] buffer = dbfFile.ReadBytes(Marshal.SizeOf(typeof(DBFHeader)));
 
-                // Marshall the header into a DBFHeader structure
-                GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-                header = (DBFHeader)Marshal.PtrToStructure(
-                                    handle.AddrOfPinnedObject(), typeof(DBFHeader));
-                handle.Free();
-                totalNumberElements = header.numRecords;
-            }   // using
+                    // Marshall the header into a DBFHeader structure
+                    GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                    header = (DBFHeader)Marshal.PtrToStructure(
+                                        handle.AddrOfPinnedObject(), typeof(DBFHeader));
+                    handle.Free();
+                    totalNumberElements = header.numRecords;
+                }   // using
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Nu se poate deschide fisierul \"{0}\"", pathToDBF));
+            }
+            
         }
 
         private void ReadHeader(BinaryReader dbfFile)

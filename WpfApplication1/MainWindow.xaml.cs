@@ -24,7 +24,7 @@ namespace WpfApplication1
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BackgroundWorker backgroundGenerateDocx = new BackgroundWorker();
+        private BackgroundWorker backgroundGenerateDocx;
 
         public MainWindow()
         {
@@ -82,6 +82,10 @@ namespace WpfApplication1
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
             int totalNumberOfRecords = 0;
+            backgroundGenerateDocx = new BackgroundWorker();
+            backgroundGenerateDocx.WorkerSupportsCancellation = true;
+            backgroundGenerateDocx.WorkerReportsProgress = true;
+
             try
             {
                 DBFreader getMaximumElementsProgressBar = new DBFreader(dbfFolderPath.Text);
@@ -91,17 +95,15 @@ namespace WpfApplication1
             {
                 MessageBox.Show(ex.Message);
                 cancelButton_Click(new object(), new RoutedEventArgs());
+                return;
             }
             string[] paths = new string[] { dbfFolderPath.Text, docxFolderPath.Text, generatedDocxPath.Text, totalNumberOfRecords.ToString()};
-            backgroundGenerateDocx.WorkerSupportsCancellation = true;
-            backgroundGenerateDocx.WorkerReportsProgress = true;
             backgroundGenerateDocx.DoWork += new DoWorkEventHandler(BackgroundGenerateDocx_DoWork);
             backgroundGenerateDocx.ProgressChanged += new ProgressChangedEventHandler(BackgroundGenerateDocx_ProgressChanged);
             backgroundGenerateDocx.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundGenerateDocx_RunWorkerCompleted);
-
-            backgroundGenerateDocx.RunWorkerAsync(paths);
             cancelButton.IsEnabled = true;
             startButton.IsEnabled = false;
+            backgroundGenerateDocx.RunWorkerAsync(paths);
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -131,9 +133,8 @@ namespace WpfApplication1
                 }
             }            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
                 e.Cancel = true;
-                this.Dispatcher.Invoke((Action)(() => cancelButton_Click(new object(), new RoutedEventArgs())));
+                MessageBox.Show(ex.Message);
             }
         }   // backgroundGenerateDocx_DoWork
 
@@ -145,7 +146,10 @@ namespace WpfApplication1
         private void BackgroundGenerateDocx_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.cancelButton_Click(new object(), new RoutedEventArgs());
-            MessageBox.Show("Fisiere generate.");
+            if (e.Cancelled == false)
+            {
+                MessageBox.Show("Fisiere generate cu succes.");
+            }
         }
     }
 }
