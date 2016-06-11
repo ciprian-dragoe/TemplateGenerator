@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TemplateGenerator;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace WpfApplication1
 {
@@ -29,9 +30,9 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
-            dbfFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE.DBF";
-            docxFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\Contract Dolce Sport Mansat -7.docx";
-            generatedDocxPath.Text = @"c:\Users\cipri\Desktop\temp\";
+            //dbfFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE1.DBF";
+            //docxFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\Contract Dolce Sport Mansat -7.docx";
+            //generatedDocxPath.Text = @"c:\Users\cipri\Desktop\temp\";
         }
 
         private void browseDbfButton_Click(object sender, RoutedEventArgs e)

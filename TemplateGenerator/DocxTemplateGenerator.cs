@@ -29,44 +29,44 @@ namespace TemplateGenerator
             }
         }
 
-        ~DocxTemplateGenerator()
-        {
-            if (generatedTemplate != null)
-            {
-                ((IDisposable)generatedTemplate).Dispose();
-            }
-        }
+        //~DocxTemplateGenerator()
+        //{
+        //    if (generatedTemplate != null)
+        //    {
+        //        ((IDisposable)generatedTemplate).Dispose();
+        //    }
+        //}
 
         public void replaceKeywordsInTemplate(DataRow readDataFromDBF)
         {
             newGeneratedTemplateName = (string)readDataFromDBF["NUME"] + ".docx";
             generatedTemplate = templateSource.wordTemplateSource.Copy();
-            foreach (Paragraph paragraph in generatedTemplate.Paragraphs)
+
+            foreach (int paragraphWithKeywordsIndex in templateSource.paragraphsWithKeywords)
             {
                 foreach (DataColumn column in readDataFromDBF.Table.Columns)
                 {
                     try
                     {
                         string textToReplace = templateSource.patternStartKeyword + column.ColumnName + templateSource.patternEndKeyword;
-                        paragraph.ReplaceText(textToReplace, (string)readDataFromDBF[column]);
+                        generatedTemplate.Paragraphs[paragraphWithKeywordsIndex].ReplaceText(textToReplace, (string)readDataFromDBF[column]);
                     }
                     catch (System.InvalidCastException)
                     {
                         // create Log & on console window
                         throw new Exception(string.Format("Cuvantul de inlocuit \"{0}\" din fisierul word nu are un corespondent ca si coloana in fisierul DBF.", column.ColumnName));
                     }
-                    
+
                 }
-                        
             }
         }
 
         public void saveNewDocXfile(string path)
         {
             try
-            { 
+            {
                 generatedTemplate.SaveAs(path + "\\" + newGeneratedTemplateName);
-                
+
             }
             catch (System.IO.IOException)
             {

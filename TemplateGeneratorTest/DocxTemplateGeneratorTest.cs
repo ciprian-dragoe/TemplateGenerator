@@ -43,6 +43,31 @@ namespace TemplateGeneratorTest
         }   // ReplaceNumeStradaCorrect
 
         [TestMethod]
+        public void ReplaceNumeStradaLongWordCorrect()
+        {
+            System.IO.DirectoryInfo di = new DirectoryInfo(pathToWorkingFiles + "GeneratedTemplates\\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            DocxTemplateGenerator generator = new DocxTemplateGenerator(pathToWorkingFiles + "Contract Dolce Sport Mansat -8.docx");
+            DBFreader reader = new DBFreader(pathToWorkingFiles + "SATNETTE.DBF");
+            string expected = "Acesta este un test cu I.I. MARIN IONEL si STEZII FN.";
+
+            DataRow newValues = reader.readRows(generator.columnNamesFromDBF).First();
+            generator.replaceKeywordsInTemplate(newValues);
+            generator.saveNewDocXfile(pathToWorkingFiles + "GeneratedTemplates\\");
+
+            using (DocX generatedTemplate = DocX.Load(pathToWorkingFiles + @"\GeneratedTemplates\I.I. MARIN IONEL.docx"))
+            {
+                string actual = generatedTemplate.Paragraphs[generatedTemplate.Paragraphs.Count-1].Text;
+                Assert.AreEqual(expected, actual);
+            }   // using
+        }   // ReplaceNumeStradaCorrect
+
+        [TestMethod]
         public void ReplaceNumeEmptyTELMANCorrect()
         {
             System.IO.DirectoryInfo di = new DirectoryInfo(pathToWorkingFiles + "GeneratedTemplates\\");

@@ -76,11 +76,11 @@ namespace TemplateGenerator
                     totalNumberElements = header.numRecords;
                 }   // using
             }
-            catch (Exception ex)
+            catch (System.IO.IOException)
             {
                 throw new Exception(string.Format("Nu se poate deschide fisierul \"{0}\"", pathToDBF));
             }
-            
+
         }
 
         private void ReadHeader(BinaryReader dbfFile)

@@ -90,6 +90,9 @@
     <None Include="TestFiles\Contract Dolce Sport Mansat -7.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\Contract Dolce Sport Mansat -8.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\SATNETTE.DBF">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

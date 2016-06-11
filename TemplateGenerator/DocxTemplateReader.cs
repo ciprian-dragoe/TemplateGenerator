@@ -14,11 +14,13 @@ namespace TemplateGenerator
         public string patternStartKeyword { get; private set; }
         public string patternEndKeyword { get; private set; }
         public DocX wordTemplateSource { get; private set; }
+        public List<int> paragraphsWithKeywords { get; private set; }
 
         public DocxTemplateReader(string pathToFile)
         {
             patternStartKeyword = "{[";
             patternEndKeyword = "]}";
+            paragraphsWithKeywords = new List<int>();
             try
             {
                 wordTemplateSource = DocX.Load(pathToFile);
@@ -27,7 +29,6 @@ namespace TemplateGenerator
             {
                 throw new Exception(string.Format("Fisierul \"{0}\" este deschis in alta aplicatie.", pathToFile));
             }
-            
         }
 
         ~DocxTemplateReader()
@@ -42,11 +43,15 @@ namespace TemplateGenerator
         public DataTable GetKeywords()
         {
             DataTable returnValue = new DataTable();
-
+            int index = 0;
             foreach (Paragraph paragraph in wordTemplateSource.Paragraphs)
             {
                 List<int> foundDelimitorStartingPosition = paragraph.FindAll(patternStartKeyword);
                 List<int> foundDelimitorEndingPosition = paragraph.FindAll(patternEndKeyword);
+                if (foundDelimitorEndingPosition.Count>0)
+                {
+                    paragraphsWithKeywords.Add(index);
+                }
                 for (int i = foundDelimitorStartingPosition.Count - 1; i >= 0; i--)   // count backwards because if text is replaced from the beginning it can change the position of the "gasitPozitiiDelimitatorInceput"
                 {
                     var start = foundDelimitorStartingPosition[i];
@@ -61,7 +66,8 @@ namespace TemplateGenerator
                         // if the column name already exist then do not add it
                     }
                 }   // foundDelimitorStartingPosition
-            }   // paragraph
+                index++;
+            }
             return returnValue;
         }
     }
