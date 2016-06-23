@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_Logic", "TemplateGenerator\TemplateGenerator_Logic.csproj", "{32E14DCB-F5D7-40BC-8D0A-C063735DA6BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_Logic", "TemplateGenerator_Logic\TemplateGenerator_Logic.csproj", "{32E14DCB-F5D7-40BC-8D0A-C063735DA6BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_Test", "TemplateGeneratorTest\TemplateGenerator_Test.csproj", "{BC6A1B2D-DAC9-4FB7-9AF9-A8BEEC2F4A30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_Test", "TemplateGenerator_Test\TemplateGenerator_Test.csproj", "{BC6A1B2D-DAC9-4FB7-9AF9-A8BEEC2F4A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_UserInterface", "WpfApplication1\TemplateGenerator_UserInterface.csproj", "{1DCE0AE0-6AB7-4048-A523-36105E3461CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateGenerator_UserInterface", "TemplateGenerator_UserInterface\TemplateGenerator_UserInterface.csproj", "{1DCE0AE0-6AB7-4048-A523-36105E3461CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

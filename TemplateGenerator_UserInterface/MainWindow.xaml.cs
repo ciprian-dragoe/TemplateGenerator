@@ -14,10 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TemplateGenerator;
+using TemplateGenerator_Logic;
 using System.ComponentModel;
 
-namespace WpfApplication1
+namespace TemplateGenerator_UserInterface
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -29,8 +29,8 @@ namespace WpfApplication1
         public MainWindow()
         {
             InitializeComponent();
-            dbfFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE.DBF";
-            docxFolderPath.Text = @"D:\CLOUD-SYNC\Cipi\QSYNC\6_PROJECTS\TemplateGenerator\WorkingFiles\Contract Dolce Sport Mansat -7.docx";
+            dbfFolderPath.Text = @"D:\PROJECTS\TemplateGenerator\WorkingFiles\SATNETTE.DBF";
+            docxFolderPath.Text = @"D:\PROJECTS\TemplateGenerator\WorkingFiles\Contract Dolce Sport Mansat -7.docx";
             generatedDocxPath.Text = @"c:\Users\cipri\Desktop\temp\";
         }
 

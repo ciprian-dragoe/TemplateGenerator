@@ -6,7 +6,7 @@ using Novacode;
 using System.Data;
 using System.IO;
 
-namespace TemplateGenerator
+namespace TemplateGenerator_Logic
 {
     public class DocxTemplateGenerator
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{32E14DCB-F5D7-40BC-8D0A-C063735DA6BA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemplateGenerator</RootNamespace>
-    <AssemblyName>TemplateGenerator</AssemblyName>
+    <RootNamespace>TemplateGenerator_Logic</RootNamespace>
+    <AssemblyName>TemplateGenerator_Logic</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

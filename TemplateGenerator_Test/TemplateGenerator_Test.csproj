@@ -6,8 +6,8 @@
     <ProjectGuid>{BC6A1B2D-DAC9-4FB7-9AF9-A8BEEC2F4A30}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemplateGeneratorTest</RootNamespace>
-    <AssemblyName>TemplateGeneratorTest</AssemblyName>
+    <RootNamespace>TemplateGenerator_Test</RootNamespace>
+    <AssemblyName>TemplateGenerator_Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -62,7 +62,7 @@
     <Compile Include="DocxTemplateGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemplateGenerator\TemplateGenerator_Logic.csproj">
+    <ProjectReference Include="..\TemplateGenerator_Logic\TemplateGenerator_Logic.csproj">
       <Project>{32e14dcb-f5d7-40bc-8d0a-c063735da6ba}</Project>
       <Name>TemplateGenerator_Logic</Name>
     </ProjectReference>

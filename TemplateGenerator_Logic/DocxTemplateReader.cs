@@ -7,7 +7,7 @@ using Novacode;
 using System.Drawing;
 using System.Data;
 
-namespace TemplateGenerator
+namespace TemplateGenerator_Logic
 {
     public class DocxTemplateReader
     {

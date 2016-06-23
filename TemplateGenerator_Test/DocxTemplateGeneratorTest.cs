@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TemplateGenerator;
+using TemplateGenerator_Logic;
 using System.Data;
 using Novacode;
 using System.Linq;
 using System.IO;
 
-namespace TemplateGeneratorTest
+namespace TemplateGenerator_Test
 {
     [TestClass]
     public class DocxTemplateGeneratorTest

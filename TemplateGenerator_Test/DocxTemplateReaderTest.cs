@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TemplateGenerator;
+using TemplateGenerator_Logic;
 using System.Data;
 using System.Collections.Generic;
 
-namespace TemplateGeneratorTest
+namespace TemplateGenerator_Test
 {
     [TestClass]
     public class DocxTemplateReaderTest
